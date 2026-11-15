@@ -99,8 +99,8 @@ export function BagDrawer({
                   Confirmed — Preparing Dispatch
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {customerName ? `${customerName}, your` : "Your"} IVI reservation has been logged
-                  {shippingCity ? ` for ${shippingCity}` : ""}. Each garment is steamed and packed on cedar hangers.
+                  {customerName ? `${customerName}, your` : "Your"} IVI Outdoor Sports order has been logged
+                  {shippingCity ? ` for ${shippingCity}` : ""}. Each piece is inspected and packed in a weather-resistant transit sleeve.
                 </p>
               </div>
               <button
@@ -118,7 +118,7 @@ export function BagDrawer({
             <div className="flex h-full flex-col items-center justify-center gap-3 py-16 text-center">
               <p className="font-serif text-xl text-foreground">Your bag is currently empty</p>
               <p className="max-w-[30ch] text-sm text-muted-foreground">
-                Inspect pieces directly on the rail or select a silhouette from the collection below.
+                Inspect gear directly on the rail or select a piece from the outdoor lineup below.
               </p>
             </div>
           ) : (

@@ -2,15 +2,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --bg: #f7f6f2;
-  --fg: #161513;
-  --muted-fg: #6b6860;
+  --bg: #f6f7f5;
+  --fg: #131614;
+  --muted-fg: #5e6660;
   --card-bg: #ffffff;
-  --card-fg: #161513;
-  --surface-alt: #efede7;
-  --border-c: #e3e0d7;
-  --ring-c: #161513;
-  --accent-c: #8f472c;
+  --card-fg: #131614;
+  --surface-alt: #eceee9;
+  --border-c: #dde1db;
+  --ring-c: #131614;
+  --accent-c: #1f5c44;
   --color-background: var(--bg);
   --color-foreground: var(--fg);
   --color-muted-foreground: var(--muted-fg);
@@ -21,15 +21,15 @@
 }
 
 .dark {
-  --bg: #121210;
-  --fg: #f2f0ea;
-  --muted-fg: #9c988e;
-  --card-bg: #1b1a17;
-  --card-fg: #f2f0ea;
-  --surface-alt: #1f1e1b;
-  --border-c: #2b2a25;
-  --ring-c: #f2f0ea;
-  --accent-c: #c97a5b;
+  --bg: #101211;
+  --fg: #eef1ed;
+  --muted-fg: #949c96;
+  --card-bg: #171a18;
+  --card-fg: #eef1ed;
+  --surface-alt: #1d211f;
+  --border-c: #282d2a;
+  --ring-c: #eef1ed;
+  --accent-c: #4eb88a;
   --color-background: var(--bg);
   --color-foreground: var(--fg);
   --color-muted-foreground: var(--muted-fg);
@@ -50,7 +50,7 @@
   --color-ring: var(--ring-c);
   --color-accent: var(--accent-c);
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-serif: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 

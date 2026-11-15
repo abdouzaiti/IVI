@@ -5,7 +5,7 @@ export interface CatalogGarment extends RailGarment {
   color: string;
   trim: string;
   price: number;
-  category: "Essentials" | "Knitwear" | "Tailoring" | "Outerwear";
+  category: "Run Tees" | "Outerwear";
   fabricOrigin: string;
   weight: string;
   sizes: ("S" | "M" | "L" | "XL")[];
@@ -15,7 +15,7 @@ export const GARMENT_COLLECTION: CatalogGarment[] = [
   {
     id: "mosta-run-club-tee-white",
     name: "Mosta Run Club Tee — White",
-    description: "Crisp white organic cotton running tee with chest emblem and bold Mosta Run Club back graphic.",
+    description: "Crisp white heavyweight organic cotton running tee with chest emblem and bold Mosta Run Club back graphic.",
     kind: "tee",
     color: "#F5F5F4",
     trim: "#E5E5E5",
@@ -27,16 +27,16 @@ export const GARMENT_COLLECTION: CatalogGarment[] = [
     imageOffsetY: -4.0,
     tag: "$115",
     price: 115,
-    category: "Essentials",
-    fabricOrigin: "Barcelos, Portugal",
+    category: "Run Tees",
+    fabricOrigin: "Club Training",
     weight: "290 gsm",
     sizes: ["S", "M", "L", "XL"],
-    details: ["290gsm Organic Cotton", "Front & Back Screenprint", "Relaxed Athletic Cut", "Made in Portugal"],
+    details: ["290gsm Organic Cotton", "Front & Back Screenprint", "Relaxed Athletic Cut", "IVI Outdoor Sports"],
   },
   {
     id: "mosta-run-club-tee-black",
     name: "Mosta Run Club Tee — Black",
-    description: "Deep pitch-black organic cotton running tee with tonal blue chest emblem and Mosta Run Club back graphic.",
+    description: "Deep pitch-black organic cotton running tee with electric blue chest emblem and Mosta Run Club back graphic.",
     kind: "tee",
     color: "#171718",
     trim: "#0F0F10",
@@ -48,11 +48,11 @@ export const GARMENT_COLLECTION: CatalogGarment[] = [
     imageOffsetY: -4.0,
     tag: "$115",
     price: 115,
-    category: "Essentials",
-    fabricOrigin: "Barcelos, Portugal",
+    category: "Run Tees",
+    fabricOrigin: "Club Training",
     weight: "290 gsm",
     sizes: ["S", "M", "L", "XL"],
-    details: ["290gsm Organic Cotton", "Front & Back Screenprint", "Relaxed Athletic Cut", "Made in Portugal"],
+    details: ["290gsm Organic Cotton", "Front & Back Screenprint", "Relaxed Athletic Cut", "IVI Outdoor Sports"],
   },
   {
     id: "mosta-run-club-tee-white-pink",
@@ -69,11 +69,11 @@ export const GARMENT_COLLECTION: CatalogGarment[] = [
     imageOffsetY: -4.0,
     tag: "$115",
     price: 115,
-    category: "Essentials",
-    fabricOrigin: "Barcelos, Portugal",
+    category: "Run Tees",
+    fabricOrigin: "Club Training",
     weight: "290 gsm",
     sizes: ["S", "M", "L", "XL"],
-    details: ["290gsm Organic Cotton", "Pink Front & Back Print", "Relaxed Athletic Cut", "Made in Portugal"],
+    details: ["290gsm Organic Cotton", "Pink Front & Back Print", "Relaxed Athletic Cut", "IVI Outdoor Sports"],
   },
   {
     id: "mosta-run-club-tee-red",
@@ -90,11 +90,11 @@ export const GARMENT_COLLECTION: CatalogGarment[] = [
     imageOffsetY: -1.8,
     tag: "$125",
     price: 125,
-    category: "Essentials",
-    fabricOrigin: "Barcelos, Portugal",
+    category: "Run Tees",
+    fabricOrigin: "Race Day",
     weight: "210 gsm",
     sizes: ["S", "M", "L", "XL"],
-    details: ["Breathable Technical Jersey", "Marathon de Mostaganem Crest", "White Back Print", "Athletic Cut"],
+    details: ["Quick-Dry Technical Jersey", "Marathon de Mostaganem Crest", "Moisture-Wicking Knit", "Athletic Cut"],
   },
   {
     id: "mosta-run-club-tee-yellow",
@@ -111,11 +111,11 @@ export const GARMENT_COLLECTION: CatalogGarment[] = [
     imageOffsetY: -1.8,
     tag: "$125",
     price: 125,
-    category: "Essentials",
-    fabricOrigin: "Barcelos, Portugal",
+    category: "Run Tees",
+    fabricOrigin: "High-Vis Road",
     weight: "210 gsm",
     sizes: ["S", "M", "L", "XL"],
-    details: ["Breathable Technical Jersey", "Montpellier Run Crest", "Distressed Back Print", "Athletic Cut"],
+    details: ["Quick-Dry Technical Jersey", "Montpellier Run Crest", "High-Visibility Dye", "Athletic Cut"],
   },
   {
     id: "mosta-run-club-windbreaker-lime",
@@ -133,9 +133,9 @@ export const GARMENT_COLLECTION: CatalogGarment[] = [
     tag: "$220",
     price: 220,
     category: "Outerwear",
-    fabricOrigin: "Porto, Portugal",
+    fabricOrigin: "All-Weather Trail",
     weight: "110 gsm",
     sizes: ["S", "M", "L", "XL"],
-    details: ["Ripstop Nylon Shell", "Packable Storm Hood", "Full-Zip Front", "Elasticated Cuffs"],
+    details: ["Windproof Ripstop Nylon", "Packable Storm Hood", "Full-Zip Front", "Elasticated Cuffs"],
   },
 ];

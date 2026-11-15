@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ArrowDown, ArrowUpRight, Moon, RotateCw, Sun } from "lucide-react";
 import { ClothingRailHero } from "./components/ClothingRailHero";
-import { GarmentThumbnail } from "./components/GarmentIllustration";
+import { GarmentThumbnail, type GarmentViewMode } from "./components/GarmentIllustration";
 import { BagDrawer, type BagItem } from "./components/BagDrawer";
 import { GARMENT_COLLECTION, type CatalogGarment } from "./data/garments";
 
@@ -15,14 +15,13 @@ const CATEGORIES: CategoryFilter[] =
   AVAILABLE_CATEGORIES.length > 1 ? ["All", ...AVAILABLE_CATEGORIES] : [];
 
 export default function App() {
-  const [hanger, setHanger] = React.useState<"wood" | "matte" | "none">("wood");
   const [autoplay, setAutoplay] = React.useState(true);
   const [darkMode, setDarkMode] = React.useState(false);
   const [category, setCategory] = React.useState<CategoryFilter>("All");
   const [selectedSizes, setSelectedSizes] = React.useState<Record<string, string>>(() =>
     Object.fromEntries(GARMENT_COLLECTION.map((g) => [g.id, "M"])),
   );
-  const [flippedCards, setFlippedCards] = React.useState<Record<string, boolean>>({});
+  const [cardModes, setCardModes] = React.useState<Record<string, GarmentViewMode>>({});
   const [bag, setBag] = React.useState<BagItem[]>([]);
   const [bagOpen, setBagOpen] = React.useState(false);
   const [justAddedId, setJustAddedId] = React.useState<string | null>(null);
@@ -94,10 +93,10 @@ export default function App() {
               <span className="inline-flex h-12 w-24 items-center justify-start overflow-hidden">
                 <img
                   src="/logo.png"
-                  alt="IVI"
+                  alt="IVI Outdoor Sports"
                   referrerPolicy="no-referrer"
                   onError={() => setLogoError(true)}
-                  className="h-full w-full origin-center scale-[2.2] object-contain"
+                  className="h-full w-full origin-center scale-[2.2] object-contain dark:invert"
                 />
               </span>
             )}
@@ -123,13 +122,13 @@ export default function App() {
               href="#materials"
               className="transition-colors hover:text-foreground whitespace-nowrap shrink-0"
             >
-              Materials
+              Performance
             </a>
             <a
-              href="#atelier"
+              href="#club"
               className="transition-colors hover:text-foreground whitespace-nowrap shrink-0"
             >
-              Atelier
+              Run Club
             </a>
           </nav>
 
@@ -151,17 +150,17 @@ export default function App() {
         <div id="rail">
           <ClothingRailHero
             items={GARMENT_COLLECTION}
-            eyebrow="Autumn / Winter 2026"
-            heading="Autumn / Winter Edit on the Rail"
-            caption="Glide across the rail to turn each garment forward, drag along the bar, or click any piece for full 360° inspection."
+            eyebrow="IVI Outdoor Sports · Run & Trail"
+            heading="Performance Kit on the Rail"
+            caption="Glide across the rail to turn each piece forward, drag along the bar, or click any garment for full 360° front and back inspection."
             autoplay={autoplay}
-            hanger={hanger}
+            hanger="none"
             action={
               <a
                 href="#collection"
                 className="inline-flex items-center gap-2 border border-border bg-card px-5 py-2.5 text-xs font-medium tracking-wide text-foreground transition-colors hover:bg-surface whitespace-nowrap"
               >
-                <span>Explore the Collection</span>
+                <span>Explore the Lineup</span>
                 <ArrowDown className="size-3.5" />
               </a>
             }
@@ -174,35 +173,10 @@ export default function App() {
           className="border-y border-border bg-surface/60"
         >
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-3.5 text-xs">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="text-muted-foreground">Hanger</span>
-              <div
-                role="group"
-                aria-label="Hanger material"
-                className="inline-flex border border-border bg-card p-0.5"
-              >
-                {(
-                  [
-                    { id: "wood", label: "Cedar Wood" },
-                    { id: "matte", label: "Matte" },
-                    { id: "none", label: "None" },
-                  ] as const
-                ).map((opt) => (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    onClick={() => setHanger(opt.id)}
-                    aria-pressed={hanger === opt.id}
-                    className={`px-3 py-1.5 font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                      hanger === opt.id
-                        ? "bg-foreground text-background"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
+            <div className="flex flex-wrap items-center gap-2.5 text-muted-foreground">
+              <span className="font-medium text-foreground">IVI Outdoor Sports</span>
+              <span aria-hidden="true">·</span>
+              <span>Mosta Run Club &amp; Trail Gear</span>
             </div>
 
             <div className="flex items-center gap-3">
@@ -234,10 +208,10 @@ export default function App() {
           <div className="flex flex-col justify-between gap-6 border-b border-border pb-8 md:flex-row md:items-end">
             <div>
               <p className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">
-                Seasonal Edit
+                Outdoor &amp; Trail Kit
               </p>
               <h2 className="mt-2 font-serif text-3xl font-medium tracking-tight text-balance sm:text-4xl">
-                The Complete Seasonal Edit
+                The Complete Run Club Lineup
               </h2>
             </div>
 
@@ -268,10 +242,14 @@ export default function App() {
           </div>
 
           <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredGarments.map((item) => {
+            {filteredGarments.map((item, idx) => {
               const selectedSize = selectedSizes[item.id] ?? "M";
-              const isBack = Boolean(flippedCards[item.id]);
+              const mode: GarmentViewMode = cardModes[item.id] ?? "auto";
               const isAdded = justAddedId === item.id;
+              const nextMode: GarmentViewMode =
+                mode === "auto" ? "back" : mode === "back" ? "front" : "auto";
+              const buttonLabel =
+                mode === "auto" ? "Show Back" : mode === "back" ? "Show Front" : "Auto Turn";
 
               return (
                 <article
@@ -283,9 +261,11 @@ export default function App() {
                       kind={item.kind}
                       color={item.color}
                       trim={item.trim}
-                      side={isBack ? "back" : "front"}
+                      viewMode={mode}
+                      turnOffsetDeg={idx * 42}
                       image={item.image}
                       backImage={item.backImage}
+                      sideImage={item.sideImage}
                       alt={item.name}
                       imageScale={item.imageScale}
                       imageOffsetY={item.imageOffsetY}
@@ -293,12 +273,12 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() =>
-                        setFlippedCards((prev) => ({ ...prev, [item.id]: !prev[item.id] }))
+                        setCardModes((prev) => ({ ...prev, [item.id]: nextMode }))
                       }
-                      aria-label={`View ${isBack ? "front" : "back"} of ${item.name}`}
-                      className="absolute right-4 bottom-4 border border-border bg-card/90 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur-xs transition-colors hover:text-foreground whitespace-nowrap cursor-pointer"
+                      aria-label={`${buttonLabel} for ${item.name}`}
+                      className="absolute right-4 bottom-4 z-30 border border-border bg-card/90 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur-xs transition-colors hover:text-foreground whitespace-nowrap cursor-pointer"
                     >
-                      {isBack ? "Show Front" : "Show Back"}
+                      {buttonLabel}
                     </button>
                   </div>
 
@@ -366,39 +346,39 @@ export default function App() {
           </div>
         </section>
 
-        {/* Craftsmanship & Provenance Section */}
+        {/* Technical Materials & Outdoor Construction Section */}
         <section id="materials" className="border-t border-border bg-surface/50">
           <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <p className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">
-                Mill Provenance
+                Technical Fabrics
               </p>
               <h2 className="mt-2 font-serif text-3xl font-medium tracking-tight text-balance sm:text-4xl">
-                Cut for drape, woven to hold its line on the hanger.
+                Built for open-air miles, engineered to breathe at pace.
               </h2>
               <p className="mt-4 max-w-[46ch] text-sm leading-relaxed text-muted-foreground">
-                Every garment on the rail is patterned around natural shoulder geometry and heavy,
-                high-recovery yarns so sleeves fall cleanly without synthetic stiffness.
+                Every IVI Outdoor Sports garment is patterned for full-stride mobility, rapid
+                moisture transfer, and wind resistance from road tempo sessions to coastal trails.
               </p>
             </div>
 
             <div className="divide-y divide-border border-y border-border lg:col-span-7">
               <div className="grid gap-2 py-6 sm:grid-cols-3 sm:items-baseline">
-                <span className="font-mono text-xs text-muted-foreground">01. Jersey & Fleece</span>
+                <span className="font-mono text-xs text-muted-foreground">01. Club Cotton</span>
                 <p className="text-sm font-medium text-foreground sm:col-span-2">
-                  290gsm Portuguese organic cotton &amp; 520gsm Wakayama loopwheel fleece knitted under low tension.
+                  290gsm heavyweight combed organic cotton jersey cut for warm-ups, recovery days, and everyday movement.
                 </p>
               </div>
               <div className="grid gap-2 py-6 sm:grid-cols-3 sm:items-baseline">
-                <span className="font-mono text-xs text-muted-foreground">02. Fine Knitwear</span>
+                <span className="font-mono text-xs text-muted-foreground">02. Race Jersey</span>
                 <p className="text-sm font-medium text-foreground sm:col-span-2">
-                  5-gauge extrafine Australian merino spun in Biella with linked saddle shoulders and tubular ribs.
+                  210gsm quick-dry breathable athletic knit with smooth anti-chafe seams built for marathon and track efforts.
                 </p>
               </div>
               <div className="grid gap-2 py-6 sm:grid-cols-3 sm:items-baseline">
-                <span className="font-mono text-xs text-muted-foreground">03. Heavy Outerwear</span>
+                <span className="font-mono text-xs text-muted-foreground">03. Ripstop Shell</span>
                 <p className="text-sm font-medium text-foreground sm:col-span-2">
-                  410gsm Scottish cotton moleskin and 640gsm Prato double-faced wool-cashmere melton, hand-felled.
+                  110gsm windproof, water-repellent micro-ripstop nylon with a storm hood, full-zip front, and elasticated cuffs.
                 </p>
               </div>
             </div>
@@ -407,7 +387,7 @@ export default function App() {
       </main>
 
       {/* Quiet Editorial Footer */}
-      <footer id="atelier" className="border-t border-border bg-background">
+      <footer id="club" className="border-t border-border bg-background">
         <div className="mx-auto flex max-w-6xl flex-col justify-between gap-6 px-6 py-12 text-xs text-muted-foreground sm:flex-row sm:items-center">
           <div className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center font-serif text-base font-medium tracking-[0.06em] text-foreground">
@@ -417,16 +397,16 @@ export default function App() {
                 <span className="inline-flex h-7 w-14 items-center justify-center overflow-hidden">
                   <img
                     src="/logo.png"
-                    alt="IVI"
+                    alt="IVI Outdoor Sports"
                     referrerPolicy="no-referrer"
                     onError={() => setLogoError(true)}
-                    className="h-full w-full origin-center scale-[2.2] object-contain"
+                    className="h-full w-full origin-center scale-[2.2] object-contain dark:invert"
                   />
                 </span>
               )}
             </span>
             <span aria-hidden="true">·</span>
-            <span>Bredgade 42, Copenhagen</span>
+            <span>Outdoor Sports &amp; Run Club</span>
             <span aria-hidden="true">·</span>
             <span>Complimentary courier dispatch above $300</span>
           </div>
